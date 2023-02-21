@@ -30,4 +30,10 @@ public class PenjualanController {
         return penjualanService.getPenjualanById(id);
     }
 
+    @DeleteMapping("/{id}")
+    public String deletePenjualan(@PathVariable Long id) {
+        penjualanService.deletePenjualanById(id);
+        return "Data berhasil dihapus!";
+    }
+
 }

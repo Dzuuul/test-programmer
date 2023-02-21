@@ -12,7 +12,7 @@ public class Penjualan {
     @Column(name = "id", nullable = false)
 
     private Long id;
-    private Date tglFaktur = new Date();
+    private String tglFaktur;
     private int noFaktur;
     private String namaKonsumen;
     private String kodeBarang;
@@ -31,11 +31,11 @@ public class Penjualan {
         this.id = id;
     }
 
-    public Date getTglFaktur() {
+    public String getTglFaktur() {
         return tglFaktur;
     }
 
-    public void setTglFaktur(Date tglFaktur) {
+    public void setTglFaktur(String tglFaktur) {
         this.tglFaktur = tglFaktur;
     }
 

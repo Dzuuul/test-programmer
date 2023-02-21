@@ -11,6 +11,8 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button, Typography } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,6 +42,7 @@ export default function Barang() {
   const [satuan, setSatuan] = React.useState("");
   const [kategori, setKategori] = React.useState("");
   const [barang, setBarang] = React.useState([]);
+  const [clicked, setClicked] = React.useState(false);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -58,6 +61,8 @@ export default function Barang() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(barang),
     });
+
+    setClicked(true);
   };
 
   React.useEffect(() => {
@@ -66,8 +71,7 @@ export default function Barang() {
       .then((result) => {
         setBarang(result);
       });
-  });
-
+  },[]);
 
   return (
     <>
@@ -164,11 +168,12 @@ export default function Barang() {
                 </StyledTableCell>
                 <StyledTableCell align="right">Satuan</StyledTableCell>
                 <StyledTableCell align="right">Kategori</StyledTableCell>
+                <StyledTableCell align="right">Action</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {barang.map((tr) => (
-                <StyledTableRow key={tr?.kodeBarang}>
+                <StyledTableRow key={JSON.stringify(tr?.kodeBarang)}>
                   <StyledTableCell component="th" scope="row">
                     {tr?.kodeBarang}
                   </StyledTableCell>
@@ -184,6 +189,12 @@ export default function Barang() {
                   <StyledTableCell align="right">{tr?.satuan}</StyledTableCell>
                   <StyledTableCell align="right">
                     {tr?.kategori}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <Box sx={{ display: "flex" }} gap={2}>
+                      <EditIcon />
+                      <DeleteIcon />
+                    </Box>
                   </StyledTableCell>
                 </StyledTableRow>
               ))}

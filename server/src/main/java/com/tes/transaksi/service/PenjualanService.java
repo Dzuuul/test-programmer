@@ -8,5 +8,6 @@ public interface PenjualanService {
     public Penjualan savePenjualan(Penjualan penjualan);
     public List<Penjualan> getAllPenjualan();
     public Penjualan getPenjualanById(Long id);
+    public void deletePenjualanById(Long id);
 
 }

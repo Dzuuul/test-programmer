@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MasterBarangServiceImpl implements MasterBarangService {
@@ -20,5 +21,16 @@ public class MasterBarangServiceImpl implements MasterBarangService {
     @Override
     public List<MasterBarang> getAllBarang() {
         return masterBarangRepository.findAll();
+    }
+
+    @Override
+    public MasterBarang getMasterBarangById(Long id) {
+        Optional<MasterBarang> optionalMasterBarang = masterBarangRepository.findById(Math.toIntExact(id));
+        return optionalMasterBarang.orElse(null);
+    };
+
+    @Override
+    public void deleteMasterBarangById(Long id) {
+        masterBarangRepository.deleteById(Math.toIntExact(id));
     }
 }

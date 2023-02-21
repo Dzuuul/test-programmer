@@ -28,4 +28,9 @@ public class PenjualanServiceImpl implements PenjualanService{
         return optionalPenjualan.orElse(null);
     }
 
+    @Override
+    public void deletePenjualanById(Long id) {
+        penjualanRepository.deleteById(Math.toIntExact(id));
+    }
+
 }

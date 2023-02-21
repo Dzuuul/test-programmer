@@ -11,6 +11,8 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import { Button, Typography } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -41,6 +43,7 @@ export default function Penjualan() {
   const [hargaSatuan, setHargaSatuan] = React.useState(null);
   const [hargaTotal, setHargaTotal] = React.useState(null);
   const [penjualan, setPenjualan] = React.useState([]);
+  const [idDelete, setIdDelete] = React.useState(null);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -62,13 +65,41 @@ export default function Penjualan() {
     });
   };
 
+  const handleDelete = (id) => {
+    setIdDelete(id);
+  };
+
+  // const deleteById = React.useMutation(async (id) => {
+  //   try {
+  //     fetch("http://localhost:8080/penjualan/" + id, {
+  //       method: "DELETE",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(penjualan),
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // });
+
+  const deleteById = (id) => {
+    fetch("http://localhost:8080/penjualan/" + id, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(penjualan),
+    });
+  };
+
+  React.useEffect(() => {
+    deleteById(idDelete);
+  }, []);
+
   React.useEffect(() => {
     fetch("http://localhost:8080/penjualan")
       .then((res) => res.json())
       .then((result) => {
         setPenjualan(result);
       });
-  });
+  }, []);
 
   return (
     <>
@@ -173,6 +204,7 @@ export default function Penjualan() {
                 <StyledTableCell align="center">Jumlah</StyledTableCell>
                 <StyledTableCell align="center">Harga Satuan</StyledTableCell>
                 <StyledTableCell align="center">Harga Total</StyledTableCell>
+                <StyledTableCell align="center">Action</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -199,6 +231,18 @@ export default function Penjualan() {
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     {row.hargaTotal}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <Box sx={{ display: "flex" }} gap={2}>
+                      <EditIcon />
+                      <Button
+                        onClick={() => {
+                          handleDelete(row.id);
+                        }}
+                      >
+                        <DeleteIcon />
+                      </Button>
+                    </Box>
                   </StyledTableCell>
                 </StyledTableRow>
               ))}

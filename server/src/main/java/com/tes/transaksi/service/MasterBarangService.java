@@ -7,4 +7,6 @@ import java.util.List;
 public interface MasterBarangService {
     public MasterBarang saveMasterBarang(MasterBarang masterBarang);
     public List<MasterBarang> getAllBarang();
+    public MasterBarang getMasterBarangById(Long id);
+    public void deleteMasterBarangById(Long id);
 }

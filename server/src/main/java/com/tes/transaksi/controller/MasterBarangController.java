@@ -21,7 +21,18 @@ public class MasterBarangController {
     }
 
     @GetMapping()
-    public List<MasterBarang> getAllBarang(){
+    public List<MasterBarang> getAllBarang() {
         return masterBarangService.getAllBarang();
+    }
+
+    @GetMapping("/{id}")
+    public MasterBarang getMasterBarangById(@PathVariable Long id) {
+        return masterBarangService.getMasterBarangById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteMasterBarang(@PathVariable Long id) {
+        masterBarangService.deleteMasterBarangById(id);
+        return "Barang berhasil dihapus!";
     }
 }
